@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactElement } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import styled from 'styled-components';
 
-function App() {
+import Home from './views/home';
+import Profile from './views/profile';
+import Transfers from './views/transfers';
+
+const Container = styled.div`
+  padding: 1rem;
+`;
+
+export default function App(): ReactElement {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Container>
+        <Switch>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route path="/transfers">
+            <Transfers />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
   );
 }
-
-export default App;
