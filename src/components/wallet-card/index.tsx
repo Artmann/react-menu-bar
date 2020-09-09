@@ -1,7 +1,7 @@
-  import React, { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 
-import { Wallet } from '../types';
+import { Wallet } from '../../types';
 
 interface WalletProps {
   wallet: Wallet

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+    import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -7,41 +7,50 @@ const Card = styled.div`
   border: solid 1px #EDF2F7;
   border-radius: 0.5rem;
   margin-bottom: 0.75rem;
-  padding: 1rem;
 `;
 const Container = styled.div`
-  text-align: center;
+  padding: 2rem;
+`;
+const Details = styled.div`
+  color: #718096;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+`;
+const Name = styled.div`
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 `;
 const ProfileImage = styled.img`
-  display: inline-block;
-  height: 16rem;
-  width: 16rem;
-`;
-const Row = styled.div`
-  font-size: 0.8rem;
-  padding: 1rem 0.5rem;
-  text-transform: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: block;
+  height: auto;
+  width: 100%;
 `;
 
 export default function Profile(): ReactElement {
   return (
-    <Container>
+    <Card>
       <ProfileImage
         alt="Profile Image"
-        src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg"
+        src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg"
         />
 
-      <Card>
-        <Row>
+      <Container>
+        <Name>
           John Smith
-        </Row>
-        <Row>
-          Villa de Valencia 423
-        </Row>
-        <Row>
+        </Name>
+        <Details>
+          Villa de Valencia 423 <br />
           08212 Barcelona
-        </Row>
-      </Card>
-    </Container>
+        </Details>
+        <Details>
+          +34 793 846 519
+        </Details>
+        <Details>
+          john.smith@gmail.com
+        </Details>
+      </Container>
+    </Card>
   );
 }
