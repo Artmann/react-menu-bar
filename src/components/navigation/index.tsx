@@ -20,6 +20,7 @@ const Background = styled(motion.div)`
   right: 2rem;
 `;
 const BurgerMenu = styled(motion.div)`
+  font-size: 1rem;
   padding: 0.5rem;
 `;
 const ButtonBackground = styled(motion.div)`
@@ -31,7 +32,6 @@ const ButtonBackground = styled(motion.div)`
 `;
 const MenuButton = styled(motion.div)`
   font-size: 0;
-
   margin: 0 1.5rem;
 `;
 const MenuLink = styled(Link)`
@@ -59,7 +59,8 @@ function Button({ isActive, route }: ButtonProps): ReactElement {
       await controls.start({
         height: '0rem',
         rotate: -125,
-        width: '0rem'
+        width: '0rem',
+        transition: { duration: 0 }
       });
 
       await controls.start({
