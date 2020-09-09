@@ -61,14 +61,16 @@ function Button({ isActive, route }: ButtonProps): ReactElement {
         rotate: -125,
         width: '0rem'
       });
+
       await controls.start({
-        height: '2rem',
-        fontSize: '1.5rem',
+        height: '2.25rem',
+        fontSize: '1.25rem',
         rotate: 0,
-        width: '2rem',
+        width: '2.25rem',
       });
+
       await controls.start({
-        fontSize: '1.25rem'
+        fontSize: '1rem'
       });
     };
 
