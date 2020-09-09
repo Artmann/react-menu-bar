@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { IconType } from 'react-icons';
 import { FaHome, FaBars, FaSync, FaUserAlt } from 'react-icons/fa';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
@@ -55,7 +55,7 @@ function Button({ isActive, route }: ButtonProps): ReactElement {
   const controls = useAnimation();
 
   useEffect(() => {
-    const openAnimation = async() => {
+    const openAnimation = async(): Promise<void> => {
       await controls.start({
         height: '0rem',
         rotate: -125,
@@ -100,6 +100,7 @@ function Button({ isActive, route }: ButtonProps): ReactElement {
 
 function Navigation({ location }: RouteProps): ReactElement {
   const [ isOpen, setIsOpen ] = useState(false);
+  const backgroundRef = useRef<HTMLDivElement>(null);
 
   const routes: Route[] = [
     { icon: FaHome, path: '/' },
@@ -116,7 +117,7 @@ function Navigation({ location }: RouteProps): ReactElement {
   const backgroundControls = useAnimation();
   const menuIconControls = useAnimation();
 
-  const openMenuAnimation = async() => {
+  const openMenuAnimation = async(): Promise<void> => {
     await menuIconControls.start({
       rotate: -90,
       transition: { duration: 0.1 }
@@ -141,14 +142,63 @@ function Navigation({ location }: RouteProps): ReactElement {
     })
   };
 
-  const openMenuHandler = () => {
+  const openMenuHandler = (): void => {
     openMenuAnimation().then(() => {
       setIsOpen(true);
     });
   };
 
+  useEffect(() => {
+    const closeMenuAnimation = async(): Promise<void> => {
+      await backgroundControls.start({
+        borderRadius: '50%',
+        left: 'auto',
+        minHeight: 'initial',
+        minWidth: 'initial',
+        right: '2rem',
+        transform: 'none',
+        transition: { duration: 0.15 }
+      });
+
+      await menuIconControls.start({
+        display: 'block'
+      });
+
+      await menuIconControls.start({
+        rotate: 0,
+        transition: { duration: 0.1 }
+      });
+    };
+
+    const clickHandler = (event: MouseEvent): void => {
+      const { current } = backgroundRef;
+
+      if (!current || !event.currentTarget) {
+        return;
+      }
+
+      if (current.contains(event.target as HTMLElement)) {
+        return;
+      }
+
+      if (!isOpen) {
+        return;
+      }
+
+      console.log('CLOSE');
+
+      setIsOpen(false);
+
+      closeMenuAnimation();
+    };
+
+    document.addEventListener('click', clickHandler);
+
+    return () => document.removeEventListener('click', clickHandler);
+  }, [ backgroundControls, isOpen, menuIconControls ]);
+
   return (
-    <Background animate={ backgroundControls }>
+    <Background animate={ backgroundControls } ref={ backgroundRef }>
       <BurgerMenu animate={ menuIconControls }>
         <FaBars onClick={ openMenuHandler } />
       </BurgerMenu>
